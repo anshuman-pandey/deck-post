@@ -1,9 +1,8 @@
 {
-  "checked_at": "2026-11-16T07:41:06.548674+00:00",
-  "state": "incomplete local core",
-  "tests": "10 tests passed",
+  "checked_at": "2026-11-16T10:52:05.001914+00:00",
+  "state": "local incomplete API preview",
+  "tests": "18 tests passed: 10 core and 8 HTTP integration tests",
   "pending": [
-    "Authenticated API",
     "Visual UI",
     "Six languages",
     "Browser and deployment acceptance"
