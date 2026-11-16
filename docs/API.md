@@ -9,7 +9,7 @@ export DECK_DATABASE=deck.sqlite3
 python server.py
 ```
 
-Development API listens on `127.0.0.1:8099`. No browser UI or production deployment yet. All keys use `Authorization: Bearer <key>`. Query-string keys are not accepted. Keep the owner key private.
+Development server and browser workspace listen on `127.0.0.1:8099`. Production deployment remains pending. All keys use `Authorization: Bearer <key>`. Query-string keys are not accepted. Keep the owner key private.
 
 | Route | Access | Behavior |
 | --- | --- | --- |
@@ -25,4 +25,4 @@ HEAD validates access without returning file bytes or adding a retrieval. Range 
 
 Expiry is enforced at authorization, including the exact expiry instant. A transfer authorized before expiry/revocation may finish. Copies already saved cannot be revoked. PDFs are structurally checked but not sanitized or malware-scanned.
 
-Denied access returns 401; invalid input 400; oversized requests 413; invalid content types 415; storage unavailability 503. Errors are JSON. No CORS is enabled; responses disable caching and framing. Tests use Flask's HTTP client; actual browser and deployment acceptance remain pending.
+Denied access returns 401; invalid input 400; oversized requests 413; invalid content types 415; storage unavailability 503. Errors are JSON. No CORS is enabled; responses disable caching and framing. Tests use Flask's HTTP client and Chromium browser workflow acceptance. Deployment acceptance remains pending.
