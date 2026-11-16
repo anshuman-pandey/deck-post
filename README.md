@@ -4,7 +4,7 @@
 
 **Share a PDF with an expiry date. Revoke future access when the conversation moves on.**
 
-Local English/Spanish browser preview; no hosted demo or public release yet.
+Local six-language browser preview; no hosted demo or public release yet.
 
 ![Deck Post owner workspace](docs/assets/workspace.png)
 
@@ -30,7 +30,7 @@ Use Python 3.12 on Linux. PDFs are limited to 10 MiB, unencrypted, 1–100 pages
 
 Expiry and revocation prevent future retrieval; they cannot erase copies already obtained or stop an already authorized transfer. Retrieval events show that bytes were returned by the library, not successful network delivery or human reading. They are not unique visitors, verified identities or page-level engagement analytics. No client IP addresses or emails are collected by the core. PDFs are attachment-only in the local API; no download prevention or full DocSend parity is promised.
 
-Next: German, Japanese, Simplified Chinese, Traditional Chinese and public HTTPS acceptance. [Scope and evidence](docs/SCOPE.md) · [MIT license](LICENSE).
+Pending: native-speaker review, public HTTPS acceptance and owner publication approval. [Run and review the local preview](HANDOFF.md). [Scope and evidence](docs/SCOPE.md) · [MIT license](LICENSE).
 
 [Run the authenticated API](docs/API.md). Eighteen tests cover core behavior and HTTP upload/download/authentication, exact expiry, revocation, request limits, full attachments and retrieval-count semantics.
 
@@ -50,4 +50,4 @@ DECK_TEST_KEY="$DECK_OWNER_KEY" PYTHON=python3 node scripts/browser.cjs
 
 Override `DECK_URL` or `CHROMIUM` when needed. This test creates documents and links in the test database. Chromium acceptance covers upload, private-link creation, exact PDF bytes, metadata exclusion from counts, retrieval counts, revocation, real-time expiry and a 390px layout. Python tests cover authorization boundaries and malformed requests. No production deployment is claimed.
 
-The language selector supports English and Spanish, detects regional Spanish preferences and saves your choice when browser storage is available. Switching preserves selected files, expiry values, private links and original filenames. Native browser file/date controls follow browser settings. Translation review by native speakers remains pending. Run `DECK_URL=http://127.0.0.1:8099 node scripts/locales.cjs` after the browser workflow test against a disposable instance with its test key.
+The language selector supports English, German, Spanish, Japanese, Simplified Chinese and Traditional Chinese, detects regional language preferences and saves your choice when browser storage is available. Switching preserves selected files, expiry values, private links and original filenames. Native browser file/date controls follow browser settings. Translation review by native speakers remains pending. Run `DECK_URL=http://127.0.0.1:8099 node scripts/locales.cjs` after the browser workflow test against a disposable instance with its test key.
