@@ -1,12 +1,12 @@
 {
-  "checked_at": "2026-11-16T13:48:44.074448+00:00",
+  "checked_at": "2026-11-16T14:45:51.938656+00:00",
   "state": "local English browser preview",
   "tests": "18 core/HTTP tests passed",
   "browser": "Chromium passed upload, private links, exact PDF download, metadata count exclusion, retrieval count, revocation, actual expiry, 390px no overflow; desktop/mobile screenshots inspected",
   "pending": [
     "Six languages",
-    "Persistent deployment and restore acceptance",
     "Public HTTPS and owner publication approval"
   ],
-  "published": false
+  "published": false,
+  "deployment": "Non-root/read-only Waitress container: exact PDF bytes, counts, revocation and expiry survive restart and clean-volume restore; new link/revoke operations pass. Private setup and backup overwrite refusal pass."
 }

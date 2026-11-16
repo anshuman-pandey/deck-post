@@ -30,7 +30,7 @@ Use Python 3.12 on Linux. PDFs are limited to 10 MiB, unencrypted, 1–100 pages
 
 Expiry and revocation prevent future retrieval; they cannot erase copies already obtained or stop an already authorized transfer. Retrieval events show that bytes were returned by the library, not successful network delivery or human reading. They are not unique visitors, verified identities or page-level engagement analytics. No client IP addresses or emails are collected by the core. PDFs are attachment-only in the local API; no download prevention or full DocSend parity is promised.
 
-Next: six languages and deployment/recovery acceptance. [Scope and evidence](docs/SCOPE.md) · [MIT license](LICENSE).
+Next: six languages and public HTTPS acceptance. [Scope and evidence](docs/SCOPE.md) · [MIT license](LICENSE).
 
 [Run the authenticated API](docs/API.md). Eighteen tests cover core behavior and HTTP upload/download/authentication, exact expiry, revocation, request limits, full attachments and retrieval-count semantics.
 
@@ -38,7 +38,7 @@ Next: six languages and deployment/recovery acceptance. [Scope and evidence](doc
 
 Follow [local setup](docs/API.md), then open http://127.0.0.1:8099. Enter your owner key, upload a PDF, select it, set an expiry, and create a private link. Copy the link into a separate browser tab to download. Refresh the owner view to see retrieval requests; use Revoke to deny future requests.
 
-Link secrets live in the URL fragment, which the recipient page clears after loading. Keys remain in memory and are not saved to browser storage. Keep the original private link to reopen it; refreshing a recipient page after its fragment was cleared requires that original link. Anyone holding it has access until expiry or revocation. Run on localhost for now; deployment and HTTPS acceptance are pending.
+Link secrets live in the URL fragment, which the recipient page clears after loading. Keys remain in memory and are not saved to browser storage. Keep the original private link to reopen it; refreshing a recipient page after its fragment was cleared requires that original link. Anyone holding it has access until expiry or revocation. Run on localhost for now; public HTTPS acceptance is pending. See [persistent deployment and backup/restore](docs/DEPLOYMENT.md).
 
 ## Browser verification
 
