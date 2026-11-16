@@ -1,23 +1,51 @@
 # Deck Post
 
-**An open-source alternative for DocSend PDF-sharing workflows, in preparation.**
+### Share a PDF. Set an expiry. Stay in control.
 
-**Share a PDF with an expiry date. Revoke future access when the conversation moves on.**
+Give each recipient a private PDF link with an expiry date and revocation controls. A focused, self-hosted alternative to DocSend for simple PDF sharing.
 
-Local six-language browser preview; no hosted demo or public release yet.
+[![CI](https://github.com/anshuman-pandey/deck-post/actions/workflows/check.yml/badge.svg)](https://github.com/anshuman-pandey/deck-post/actions/workflows/check.yml) · [MIT license](LICENSE) · Python + SQLite · Self-hosted
 
-![Deck Post owner workspace](docs/assets/workspace.png)
+![Deck Post: actual application workspace](docs/assets/workspace.png)
 
-```mermaid
-flowchart LR
- A[Store immutable PDF] --> B[Create expiring credential]
- B --> C{Valid and not revoked?}
- C -->|Yes| D[Retrieve exact bytes]
- C -->|No| E[Deny access]
- D --> F[Record retrieval event]
+**Public source preview.** The local workflow and container recovery have been tested. There is no hosted demo or tagged product release yet; public HTTPS acceptance remains pending.
+
+## How it works
+
+1. Upload a PDF to your private workspace.
+2. Create a private link with an expiry date and share it with your recipient.
+3. Review authorized download-request counts and revoke the link when access should end.
+
+## Try it locally
+
+Requires Git, Python 3 and Docker with the Compose plugin.
+
+```sh
+git clone https://github.com/anshuman-pandey/deck-post.git
+cd deck-post
+python3 scripts/setup.py
+docker compose up --build -d
 ```
 
-Implemented: immutable SQLite PDF storage, hashed per-link credentials, UTC expiry, scoped revocation and simple retrieval counts. Links expire at the specified instant, not after it. Metadata reads do not increment retrieval counts. Owner methods are protected by the included HTTP service.
+Open **http://127.0.0.1:8099**. Read the generated private `.env` file locally and use its `DECK_OWNER_KEY` value to unlock the owner workspace. Setup retains any existing `.env`; do not commit or share this file.
+
+The app binds to localhost and stores data in a persistent Docker volume. Links pointing to localhost work only on your computer. For remote sharing, follow the [HTTPS deployment and backup guide](docs/DEPLOYMENT.md). Avoid `docker compose down -v` unless you intend to delete the stored data.
+
+## Included
+
+- Immutable PDF uploads and independently revocable sharing links.
+- Hashed link secrets, with expiry enforced on retrieval.
+- Persistent files and access records backed by SQLite.
+
+**Interface languages:** English, German, Spanish, Japanese, Simplified Chinese and Traditional Chinese. Native-speaker review is still pending. User-authored content is never translated.
+
+## Know the boundaries
+
+PDFs are limited to 10 MiB each, 100 MiB total storage and 1–100 unencrypted pages. Counts measure authorized retrieval requests, not completed downloads, unique people or proof of reading. Revocation cannot recall saved copies or stop an already authorized transfer. Bounded structural PDF checks are not malware scanning. No page analytics, identity verification, signatures or download prevention.
+
+Private links and reviewer keys grant access to whoever holds them. Keep the owner key separate from participant credentials. This project covers the workflow above, not the full feature set of its commercial reference.
+
+## Development and checks
 
 ```sh
 python3 -m venv .venv
@@ -26,28 +54,10 @@ pip install -r requirements.txt
 python -m unittest discover -s tests -v
 ```
 
-Use Python 3.12 on Linux. PDFs are limited to 10 MiB, unencrypted, 1–100 pages; total stored files are capped at 100 MiB. PDF checks run in a separate process with a 256 MiB address-space limit, 3-second CPU limit and 5-second parent timeout. This is structural validation, not sanitization, antivirus scanning or a sandbox. The worker is reused from our MIT Approval Folio component.
+The published baseline passed **18 Python tests**. Recorded browser acceptance covers: pdf upload/download, expiry, independent link revocation and request counting. Container restart and clean-volume backup/restore were also checked. See the [validation record](artifacts/validation.json) for the exact evidence and remaining acceptance gates.
 
-Expiry and revocation prevent future retrieval; they cannot erase copies already obtained or stop an already authorized transfer. Retrieval events show that bytes were returned by the library, not successful network delivery or human reading. They are not unique visitors, verified identities or page-level engagement analytics. No client IP addresses or emails are collected by the core. PDFs are attachment-only in the local API; no download prevention or full DocSend parity is promised.
+Bug reports should include reproduction steps and browser/runtime versions, with private keys and client data removed. Focused fixes and improvements are welcome through [issues](https://github.com/anshuman-pandey/deck-post/issues) and pull requests.
 
-Pending: native-speaker review, public HTTPS acceptance and owner publication approval. [Run and review the local preview](HANDOFF.md). [Scope and evidence](docs/SCOPE.md) · [MIT license](LICENSE).
+## Documentation
 
-[Run the authenticated API](docs/API.md). Eighteen tests cover core behavior and HTTP upload/download/authentication, exact expiry, revocation, request limits, full attachments and retrieval-count semantics.
-
-## Try the browser preview
-
-Follow [local setup](docs/API.md), then open http://127.0.0.1:8099. Enter your owner key, upload a PDF, select it, set an expiry, and create a private link. Copy the link into a separate browser tab to download. Refresh the owner view to see retrieval requests; use Revoke to deny future requests.
-
-Link secrets live in the URL fragment, which the recipient page clears after loading. Keys remain in memory and are not saved to browser storage. Keep the original private link to reopen it; refreshing a recipient page after its fragment was cleared requires that original link. Anyone holding it has access until expiry or revocation. Run on localhost for now; public HTTPS acceptance is pending. See [persistent deployment and backup/restore](docs/DEPLOYMENT.md).
-
-## Browser verification
-
-With a disposable server/database running and Node.js, Playwright and Chromium installed:
-
-```sh
-DECK_TEST_KEY="$DECK_OWNER_KEY" PYTHON=python3 node scripts/browser.cjs
-```
-
-Override `DECK_URL` or `CHROMIUM` when needed. This test creates documents and links in the test database. Chromium acceptance covers upload, private-link creation, exact PDF bytes, metadata exclusion from counts, retrieval counts, revocation, real-time expiry and a 390px layout. Python tests cover authorization boundaries and malformed requests. No production deployment is claimed.
-
-The language selector supports English, German, Spanish, Japanese, Simplified Chinese and Traditional Chinese, detects regional language preferences and saves your choice when browser storage is available. Switching preserves selected files, expiry values, private links and original filenames. Native browser file/date controls follow browser settings. Translation review by native speakers remains pending. Run `DECK_URL=http://127.0.0.1:8099 node scripts/locales.cjs` after the browser workflow test against a disposable instance with its test key.
+[Deployment & backups](docs/DEPLOYMENT.md) · [Api guide](docs/API.md) · [Scope & comparison](docs/SCOPE.md) · [Validation evidence](artifacts/validation.json) · [License](LICENSE)
