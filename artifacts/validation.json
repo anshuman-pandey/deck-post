@@ -9,5 +9,28 @@
   ],
   "published": false,
   "deployment": "Non-root/read-only Waitress container: exact PDF bytes, counts, revocation and expiry survive restart and clean-volume restore; new link/revoke operations pass. Private setup and backup overwrite refusal pass.",
-  "locales": "All six locales pass regional preference/persistence/blocked storage/errors/file-expiry-link preservation/literal filename/recipient/mobile checks. Catalog key and interpolation parity pass. German and Traditional Chinese mobile screenshots inspected."
+  "locales": "All six locales pass regional preference/persistence/blocked storage/errors/file-expiry-link preservation/literal filename/recipient/mobile checks. Catalog key and interpolation parity pass. German and Traditional Chinese mobile screenshots inspected.",
+  "current_audit": {
+    "checked_at": "2026-11-26T13:36:59.571702+00:00",
+    "source_head": "81f00ca2adb0f0fb41ea11f4a25ab8d3c8ab62c1",
+    "source_publication": "https://github.com/anshuman-pandey/deck-post",
+    "source_public": true,
+    "ci": {
+      "conclusion": "success",
+      "headSha": "81f00ca2adb0f0fb41ea11f4a25ab8d3c8ab62c1",
+      "status": "completed",
+      "url": "https://github.com/anshuman-pandey/deck-post/actions/runs/43975942161"
+    },
+    "local_core_check": {
+      "exit": 0,
+      "summary": "----------------------------------------------------------------------\nRan 18 tests in 4.105s\n\nOK\n"
+    },
+    "release_urls": [],
+    "hosted_demo_url": null,
+    "remaining_gates": [
+      "Native-speaker review",
+      "Public HTTPS deployment acceptance"
+    ],
+    "note": "Historical validation below is retained as dated evidence. Source publication does not establish a hosted deployment."
+  }
 }
